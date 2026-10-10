@@ -187,7 +187,8 @@ class TestErrorLeakRule:
         f = web_py_file('    return {"count": str(total)}\n')
         assert not self.rule.check(f)
 
-    # ── Regression: non-HTTP files must not fire (VGL-LOG002 FP from qa_runner) ─
+    # ── Regression: non-HTTP files must not fire (VGL-LOG002 false positive seen
+    #    on a plain Python module with no request handling) ─
     def test_ignores_internal_agent_reason_dict(self, py_file):
         """Agent/script files returning str(e) in dicts for Telegram/logging are not HTTP leaks."""
         f = py_file('        return {"app": app, "skipped": True, "reason": str(e)}\n')
